@@ -1,20 +1,39 @@
-# XOR Neural Network from Scratch using NumPy
+# ROS Agent Detection Neural Network using NumPy
 
 This project implements a simple feedforward neural network from scratch using only NumPy.  
-The network is trained to solve the XOR problem using forward propagation and backpropagation.
+The neural network is designed as a conceptual model for ROS agent detection using binary signal combinations.
+
+The project demonstrates:
+- Feedforward neural networks
+- Hidden layers
+- Sigmoid activation functions
+- Backpropagation
+- Weight optimization using gradient descent
 
 ---
 
-# XOR Truth Table
+# Overview
 
-| Input 1 | Input 2 | Output |
+Reactive Oxygen Species (ROS) are chemically reactive molecules involved in oxidative stress and cellular signaling.  
+
+In this simplified model:
+- Inputs represent possible ROS-related signal combinations
+- The neural network predicts whether the signal pattern corresponds to a normal or abnormal ROS-related response
+
+This is a conceptual educational example inspired by biological signaling systems.
+
+---
+
+# Dataset
+
+| Signal 1 | Signal 2 | Output |
 |----------|----------|--------|
 | 0 | 0 | 0 |
 | 0 | 1 | 1 |
 | 1 | 0 | 1 |
 | 1 | 1 | 0 |
 
-The XOR problem is a classic example because it is not linearly separable, so a hidden layer is required.
+The dataset follows an XOR-like structure to demonstrate nonlinear classification.
 
 ---
 
@@ -38,14 +57,14 @@ Output Layer (1)
 
 The network uses the sigmoid activation function:
 
-```python
+```python id="4wc0mf"
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
 ```
 
 Derivative:
 
-```python
+```python id="3h40w8"
 def sigmoid_derivative(x):
     return x * (1 - x)
 ```
@@ -60,7 +79,7 @@ Random weights are generated for:
 - Input → Hidden layer
 - Hidden → Output layer
 
-```python
+```python id="pv5o9u"
 self.W1 = np.random.rand(2, 2)
 self.W2 = np.random.rand(2, 1)
 ```
@@ -71,13 +90,13 @@ self.W2 = np.random.rand(2, 1)
 
 Hidden layer:
 
-```python
+```python id="10qlyd"
 self.hidden = sigmoid(np.dot(X, self.W1))
 ```
 
 Output layer:
 
-```python
+```python id="fd5pfc"
 self.output = sigmoid(np.dot(self.hidden, self.W2))
 ```
 
@@ -85,7 +104,7 @@ self.output = sigmoid(np.dot(self.hidden, self.W2))
 
 ## 3. Error Calculation
 
-```python
+```python id="j5alr5"
 error = y - self.output
 ```
 
@@ -95,13 +114,13 @@ error = y - self.output
 
 Output layer adjustment:
 
-```python
+```python id="3xfw7d"
 d_output = error * sigmoid_derivative(self.output)
 ```
 
 Hidden layer adjustment:
 
-```python
+```python id="qk04qo"
 d_hidden = d_output.dot(self.W2.T) * sigmoid_derivative(self.hidden)
 ```
 
@@ -109,7 +128,7 @@ d_hidden = d_output.dot(self.W2.T) * sigmoid_derivative(self.hidden)
 
 ## 5. Weight Updates
 
-```python
+```python id="3m96t6"
 self.W2 += self.hidden.T.dot(d_output) * self.learn_rate
 self.W1 += X.T.dot(d_hidden) * self.learn_rate
 ```
@@ -120,13 +139,13 @@ self.W1 += X.T.dot(d_hidden) * self.learn_rate
 
 The network is trained for 10,000 epochs.
 
-```python
+```python id="bp64lc"
 nn.train(X, y, epochs=10000)
 ```
 
 Learning rate:
 
-```python
+```python id="ttjlwm"
 self.learn_rate = 0.6
 ```
 
@@ -143,8 +162,8 @@ Input: [1 1] | Pred: 0.028 | Real: 0
 ```
 
 Values close to:
-- 0 = FALSE
-- 1 = TRUE
+- 0 = Normal response
+- 1 = Abnormal ROS-related response
 
 ---
 
@@ -152,7 +171,7 @@ Values close to:
 
 Install NumPy:
 
-```bash
+```bash id="t5l5l9"
 pip install numpy
 ```
 
@@ -160,7 +179,7 @@ pip install numpy
 
 # Run
 
-```bash
+```bash id="y3dr1f"
 python neural_network.py
 ```
 
@@ -170,9 +189,9 @@ python neural_network.py
 
 This project is intended for educational purposes to demonstrate:
 - Feedforward neural networks
-- Sigmoid activation
+- Nonlinear classification
 - Backpropagation
-- Weight optimization using gradient descent
-- Solving XOR with a hidden layer
+- Gradient descent optimization
+- Conceptual ROS signal detection systems
 
 ```
